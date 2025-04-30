@@ -21,7 +21,11 @@ contract DuncanPunkERC721 is IERC721ViewMetadata {
 
     address internal lastOwner;
 
+    event GitCommit(bytes20 indexed gitCommit);
+
     constructor(bytes20 gitCommit, string memory image, string memory imageEscaped) {
+        emit GitCommit(gitCommit);
+
         assembly ("memory-safe") {
             log0(add(0x20, image), mload(image))
         }
@@ -30,11 +34,11 @@ contract DuncanPunkERC721 is IERC721ViewMetadata {
         string memory tokenUriContents = string.concat(
             "{\"image\":\"",
             imageUri,
-            ",\"image_data\":\"",
+            "\",\"image_data\":",
             imageEscaped,
-            "\",\"description\":\"Profile picture for duncancmt.eth\",\"name\":\"",
+            ",\"description\":\"Profile picture for duncancmt.eth\",\"name\":\"",
             name,
-            ",\"background_color\":\"628495\"}"
+            "\",\"background_color\":\"628495\"}\n"
         );
         _tokenUriHash = tokenUriContents.dagPbUnixFsHash();
 
