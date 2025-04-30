@@ -44,6 +44,8 @@ contract DuncanPunkERC721 is IERC721ViewMetadata {
 
         _ensNode = string("duncancmt.eth").toNode();
         poke();
+
+        emit PermanentURI(tokenURI(1), 1);
     }
 
     function supportsInterface(bytes4 interfaceId) external pure override returns (bool) {
@@ -77,7 +79,7 @@ contract DuncanPunkERC721 is IERC721ViewMetadata {
     string public constant override name = "duncanpunk";
     string public constant override symbol = "DCMTPFP";
 
-    function tokenURI(uint256 tokenId) external view override returns (string memory) {
+    function tokenURI(uint256 tokenId) public view override returns (string memory) {
         require(tokenId == 1);
         return _tokenUriHash.CIDv0();
     }
