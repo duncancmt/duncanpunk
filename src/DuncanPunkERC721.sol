@@ -88,7 +88,7 @@ contract DuncanPunkERC721 is IERC721ViewMetadata {
         address currentOwner = _ensNode.toAddr();
         address prevOwner = lastOwner;
         if (currentOwner != prevOwner) {
-            lastOwner = prevOwner;
+            lastOwner = currentOwner;
             emit Transfer(prevOwner, currentOwner, 1);
         }
     }
