@@ -27,21 +27,26 @@ contract DuncanPunkERC721 is IERC721ViewMetadata {
         }
 
         string memory imageUri = image.dagPbUnixFsHash().CIDv0();
-        string memory tokenUriContents = string.concat("{\"image\":\"", imageUri, ",\"image_data\":\"", imageEscaped, "\",\"description\":\"Profile picture for duncancmt.eth\",\"name\":\"", name, ",\"background_color\":\"628495\"}");
+        string memory tokenUriContents = string.concat(
+            "{\"image\":\"",
+            imageUri,
+            ",\"image_data\":\"",
+            imageEscaped,
+            "\",\"description\":\"Profile picture for duncancmt.eth\",\"name\":\"",
+            name,
+            ",\"background_color\":\"628495\"}"
+        );
         _tokenUriHash = tokenUriContents.dagPbUnixFsHash();
 
         _ensNode = string("duncancmt.eth").toNode();
         poke();
     }
 
-    function supportsInterface(bytes4 interfaceId)
-        external
-        pure
-        override
-        returns (bool)
-    {
+    function supportsInterface(bytes4 interfaceId) external pure override returns (bool) {
         uint256 interfaceIdInt = uint32(interfaceId);
-        return (interfaceIdInt == uint32(type(IERC165).interfaceId)).or(interfaceIdInt == 0x80ac58cd /* regular IERC721 */).or(interfaceIdInt == uint32(type(IERC721ViewMetadata).interfaceId));
+        return (interfaceIdInt == uint32(type(IERC165).interfaceId))
+            .or(interfaceIdInt == 0x80ac58cd /* regular IERC721 */)
+            .or(interfaceIdInt == uint32(type(IERC721ViewMetadata).interfaceId));
     }
 
     function balanceOf(address acct) external view override returns (uint256 r) {
