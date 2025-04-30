@@ -43,10 +43,11 @@ contract Deploy is Script {
             imageEscaped = string(result.stdout);
         }
 
-        vm.startBroadcast();
+        vm.startBroadcast(0xD6B66609E5C05210BE0A690aB3b9788BA97aFa60);
         DuncanPunkERC721 token = new DuncanPunkERC721(gitCommit, image, imageEscaped);
         vm.stopBroadcast();
 
         assert(keccak256(bytes(token.tokenURI(1))) == keccak256("ipfs://QmQjU12eQzRkfeYCFQ7QAsrUY7xqMviZ7SY56C7dwEwQwS"));
+        assert(token.ownerOf(1) == 0xD6B66609E5C05210BE0A690aB3b9788BA97aFa60);
     }
 }
